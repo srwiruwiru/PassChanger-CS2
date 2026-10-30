@@ -148,7 +148,7 @@ public sealed class PasswordService : FeatureService
 
     private static bool CanRunCommand(CCSPlayerController? player, string flag)
     {
-        return player == null || AdminManager.PlayerHasPermissions(player, flag);
+        return player == null || string.IsNullOrEmpty(flag) || AdminManager.PlayerHasPermissions(player, flag);
     }
 
     private void ReplyToPlayer(CCSPlayerController? player, string messageKey, params object[] arguments)
