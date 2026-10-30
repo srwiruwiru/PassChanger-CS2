@@ -7,6 +7,9 @@ using CounterStrikeSharp.API.Modules.Cvars;
 using CounterStrikeSharp.API.Modules.Timers;
 using System.Text.Json;
 
+using PassChanger.Utils;
+using PassChanger.Configs;
+
 namespace PassChanger;
 
 public class PasswordData
@@ -14,29 +17,33 @@ public class PasswordData
 	public string Password { get; set; } = "";
 }
 
-[MinimumApiVersion(300)]
-public class PassChanger : BasePlugin, IPluginConfig<BaseConfigs>
+[MinimumApiVersion(374)]
+public class PassChanger : BasePlugin, IPluginConfig<BaseConfig>
 {
 	public override string ModuleName => "PassChanger";
-	public override string ModuleVersion => "1.0.2";
+	public override string ModuleVersion => "1.0.3";
 	public override string ModuleAuthor => "luca.uy";
 	public override string ModuleDescription => "Set a password for the server from a command.";
 
 	private string _configPath => Path.Combine(ModuleDirectory, "password_data.json");
 
-	public required BaseConfigs Config { get; set; }
-
-	public void OnConfigParsed(BaseConfigs config)
+	public required BaseConfig Config { get; set; } = new();
+	public void OnConfigParsed(BaseConfig config)
 	{
+		if (config.Version < Config.Version)
+		{
+			Utils.Logger.LogWarning("Config", $"Configuration version mismatch (Expected: {Config.Version} | Current: {config.Version})");
+		}
+
 		Config = config;
-		Utils.Config = config;
+		Utils.Logger.Config = config;
 	}
 
 	public override void Load(bool hotReload)
 	{
 		if (hotReload)
 		{
-			Utils.DebugMessage("Reloading plugin...");
+			Utils.Logger.LogInfo("Chore", "Reloading plugin...");
 		}
 
 		if (!File.Exists(_configPath))
@@ -46,11 +53,11 @@ public class PassChanger : BasePlugin, IPluginConfig<BaseConfigs>
 
 			if (!string.IsNullOrEmpty(currentPassword))
 			{
-				Utils.DebugMessage("Created password_data.json with current server password");
+				Utils.Logger.LogDebug("", "Created password_data.json with current server password");
 			}
 			else
 			{
-				Utils.DebugMessage("Created empty password_data.json (no server password set)");
+				Utils.Logger.LogDebug("", "Created empty password_data.json (no server password set)");
 			}
 		}
 
@@ -74,14 +81,14 @@ public class PassChanger : BasePlugin, IPluginConfig<BaseConfigs>
 			if (!string.IsNullOrEmpty(password) || (Config != null && Config.AllowPasswordRemoval))
 			{
 				Server.ExecuteCommand(string.IsNullOrEmpty(password) ? "sv_password \"\"" : $"sv_password \"{password}\"");
-				Utils.DebugMessage($"Password applied after {delaySeconds} seconds delay");
+				Utils.Logger.LogDebug("", $"Password applied after {delaySeconds} seconds delay");
 
 				AddTimer(1.0f, () =>
 				{
 					var currentPass = ConVar.Find("sv_password")?.StringValue;
 					if (currentPass != password)
 					{
-						Utils.DebugMessage("Warning: Password was overwritten, reapplying...");
+						Utils.Logger.LogDebug("", "Warning: Password was overwritten, reapplying...");
 						Server.ExecuteCommand(string.IsNullOrEmpty(password) ? "sv_password \"\"" : $"sv_password \"{password}\"");
 					}
 				});
@@ -161,7 +168,7 @@ public class PassChanger : BasePlugin, IPluginConfig<BaseConfigs>
 		}
 		catch (Exception ex)
 		{
-			Utils.DebugMessage($"Error saving password: {ex.Message}");
+			Utils.Logger.LogDebug("", $"Error saving password: {ex.Message}");
 		}
 	}
 
@@ -179,7 +186,7 @@ public class PassChanger : BasePlugin, IPluginConfig<BaseConfigs>
 		}
 		catch (Exception ex)
 		{
-			Utils.DebugMessage($"Error loading password: {ex.Message}");
+			Utils.Logger.LogDebug("", $"Error loading password: {ex.Message}");
 			return "";
 		}
 	}

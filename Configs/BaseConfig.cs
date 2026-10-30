@@ -1,9 +1,9 @@
-using CounterStrikeSharp.API.Core;
 using System.Text.Json.Serialization;
+using CounterStrikeSharp.API.Core;
 
-namespace PassChanger;
+namespace PassChanger.Configs;
 
-public class BaseConfigs : BasePluginConfig
+public sealed class BaseConfig : BasePluginConfig
 {
     [JsonPropertyName("ChangePassCommand")]
     public string ChangePassCommand { get; set; } = "css_changepass";
@@ -25,5 +25,7 @@ public class BaseConfigs : BasePluginConfig
 
     [JsonPropertyName("EnableDebug")]
     public bool EnableDebug { get; set; } = false;
-    
+
+    [JsonPropertyName("ConfigVersion")]
+    public override int Version { get; set; } = 1;
 }
