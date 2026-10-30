@@ -4,9 +4,9 @@ namespace PassChanger.Configs;
 
 public sealed class CommandsConfig
 {
-    [JsonPropertyName("ChangePassCommand")]
-    public string ChangePassCommand { get; set; } = "css_changepass";
+    [JsonPropertyName("ChangePassCommands")]
+    public List<string> ChangePassCommands { get; set; } = ["css_changepass"];
 
-    [JsonPropertyName("CurrentPassCommand")]
-    public string CurrentPassCommand { get; set; } = "css_currentpass";
+    [JsonPropertyName("CurrentPassCommands")]
+    public List<string> CurrentPassCommands { get; set; } = ["css_currentpass", "css_password"];
 }

@@ -22,13 +22,15 @@ The `PassChanger.json` configuration file will be automatically generated when t
 
 | Parameter                       | Description                                                                                       | Default              |
 |---------------------------------|---------------------------------------------------------------------------------------------------|----------------------|
-| `Commands.ChangePassCommand`    | The command used to change the server password.                                                         | `css_changepass`     |
+| `Commands.ChangePassCommands`   | The list of commands used to change the server password.                                                | `["css_changepass"]` |
 | `Permissions.ChangePassFlag`    | The permission flag required to use the change password command (**leave empty to allow all users**).   | `@css/generic`       |
-| `Commands.CurrentPassCommand`   | The command used to display the current server password.                                                | `css_currentpass`    |
+| `Commands.CurrentPassCommands`  | The list of commands used to display the current server password.                                       | `["css_currentpass"]` |
 | `Permissions.CurrentPassFlag`   | The permission flag required to use the current password command (**leave empty to allow all users**).  | `@css/generic`       |
 | `General.AllowPasswordRemoval`  | If enabled (`true`), allows removing the server password.                                               | `true`               |
 | `General.PasswordApplyDelay`    | The delay in seconds before applying the password.                                                      | `1.0 (recommended)`  |
 | `General.EnableDebug`           | If enabled (`true`), it will display debug messages in the server console.                              | `false`              |
+
+Each command option accepts several names, for example `"CurrentPassCommands": ["css_currentpass", "css_password", "css_pass"]`.
 
 Unloading the plugin restores the value `sv_password` had when it was loaded.
 

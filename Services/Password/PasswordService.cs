@@ -38,8 +38,11 @@ public sealed class PasswordService : FeatureService
         SaveCurrentPasswordOnFirstRun();
 
         _plugin.RegisterListener<Listeners.OnMapStart>(OnMapStart);
-        _plugin.AddCommand(_config.Commands.ChangePassCommand, "Allows to change the server password", OnChangePasswordCommand);
-        _plugin.AddCommand(_config.Commands.CurrentPassCommand, "Show current server password", OnCurrentPasswordCommand);
+        foreach (var command in _config.Commands.ChangePassCommands)
+            _plugin.AddCommand(command, "Allows to change the server password", OnChangePasswordCommand);
+
+        foreach (var command in _config.Commands.CurrentPassCommands)
+            _plugin.AddCommand(command, "Show current server password", OnCurrentPasswordCommand);
 
         // NOTE: A hot reload fires no map start, and deactivation has just restored the original password
         ApplySavedPassword();
@@ -48,8 +51,11 @@ public sealed class PasswordService : FeatureService
     protected override void OnDeactivate()
     {
         _plugin.RemoveListener<Listeners.OnMapStart>(OnMapStart);
-        _plugin.RemoveCommand(_config.Commands.ChangePassCommand, OnChangePasswordCommand);
-        _plugin.RemoveCommand(_config.Commands.CurrentPassCommand, OnCurrentPasswordCommand);
+        foreach (var command in _config.Commands.ChangePassCommands)
+            _plugin.RemoveCommand(command, OnChangePasswordCommand);
+
+        foreach (var command in _config.Commands.CurrentPassCommands)
+            _plugin.RemoveCommand(command, OnCurrentPasswordCommand);
 
         ServerPassword.Apply(_originalPassword);
     }
