@@ -27,7 +27,7 @@ The `PassChanger.json` configuration file will be automatically generated when t
 | `Commands.CurrentPassCommand`   | The command used to display the current server password.                                                | `css_currentpass`    |
 | `Permissions.CurrentPassFlag`   | The permission flag required to use the current password command (**leave empty to allow all users**).  | `@css/generic`       |
 | `General.AllowPasswordRemoval`  | If enabled (`true`), allows removing the server password.                                               | `true`               |
-| `General.PasswordApplyDelay`    | The delay in seconds before applying the password.                                                      | `2.0 (recommended)`  |
+| `General.PasswordApplyDelay`    | The delay in seconds before applying the password.                                                      | `1.0 (recommended)`  |
 | `General.EnableDebug`           | If enabled (`true`), it will display debug messages in the server console.                              | `false`              |
 
 Unloading the plugin restores the value `sv_password` had when it was loaded.
