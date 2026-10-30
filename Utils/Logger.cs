@@ -15,7 +15,7 @@ public static class Logger
 
     public static void LogDebug(string category, string message)
     {
-        if (Config?.General.EnableDebug != true) return;
+        if (Config?.EnableDebug != true) return;
         WriteLine(ConsoleColor.Cyan, category, message);
     }
 

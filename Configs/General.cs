@@ -9,7 +9,4 @@ public sealed class GeneralConfig
 
     [JsonPropertyName("PasswordApplyDelay")]
     public float PasswordApplyDelay { get; set; } = 1.0f;
-
-    [JsonPropertyName("EnableDebug")]
-    public bool EnableDebug { get; set; } = false;
 }

@@ -14,6 +14,9 @@ public sealed class BaseConfig : BasePluginConfig
     [JsonPropertyName("Permissions")]
     public PermissionsConfig Permissions { get; set; } = new();
 
+    [JsonPropertyName("EnableDebug")]
+    public bool EnableDebug { get; set; } = false;
+
     [JsonPropertyName("ConfigVersion")]
     public override int Version { get; set; } = 1;
 }
