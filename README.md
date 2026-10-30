@@ -20,15 +20,17 @@ This plugin allows server administrators to set a password for the server from a
 
 The `PassChanger.json` configuration file will be automatically generated when the plugin is first loaded. Below are the available configuration options:
 
-| Parameter              | Description                                                                                       | Default              |
-|------------------------|---------------------------------------------------------------------------------------------------|----------------------|
-| `ChangePassCommand`    | The command used to change the server password.                                                         | `css_changepass`     |
-| `ChangePassFlag`       | The permission flag required to use the change password command (**leave empty to allow all users**).   | `@css/generic`       |
-| `CurrentPassCommand`   | The command used to display the current server password.                                                | `css_currentpass`    |
-| `CurrentPassFlag`      | The permission flag required to use the current password command (**leave empty to allow all users**).  | `@css/generic`       |
-| `AllowPasswordRemoval` | If enabled (`true`), allows removing the server password.                                               | `true`               |
-| `PasswordApplyDelay`   | The delay in seconds before applying the password.                                                      | `2.0 (recommended)`  |
-| `EnableDebug`          | If enabled (`true`), it will display debug messages in the server console.                              | `false`              |
+| Parameter                       | Description                                                                                       | Default              |
+|---------------------------------|---------------------------------------------------------------------------------------------------|----------------------|
+| `Commands.ChangePassCommand`    | The command used to change the server password.                                                         | `css_changepass`     |
+| `Permissions.ChangePassFlag`    | The permission flag required to use the change password command (**leave empty to allow all users**).   | `@css/generic`       |
+| `Commands.CurrentPassCommand`   | The command used to display the current server password.                                                | `css_currentpass`    |
+| `Permissions.CurrentPassFlag`   | The permission flag required to use the current password command (**leave empty to allow all users**).  | `@css/generic`       |
+| `General.AllowPasswordRemoval`  | If enabled (`true`), allows removing the server password.                                               | `true`               |
+| `General.PasswordApplyDelay`    | The delay in seconds before applying the password.                                                      | `2.0 (recommended)`  |
+| `General.EnableDebug`           | If enabled (`true`), it will display debug messages in the server console.                              | `false`              |
+
+Unloading the plugin restores the value `sv_password` had when it was loaded.
 
 ---
 

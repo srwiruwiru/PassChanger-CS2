@@ -7,31 +7,21 @@ public static class Logger
     private const string PluginName = "PassChanger";
     public static BaseConfig? Config { get; set; }
 
-    public static void LogInfo(string category, string message)
-    {
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"[{PluginName} - {category}] {message}");
-        Console.ResetColor();
-    }
+    public static void LogInfo(string category, string message) => WriteLine(ConsoleColor.Green, category, message);
 
-    public static void LogWarning(string category, string message)
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"[{PluginName} - {category}] {message}");
-        Console.ResetColor();
-    }
+    public static void LogWarning(string category, string message) => WriteLine(ConsoleColor.Yellow, category, message);
 
-    public static void LogError(string category, string message)
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"[{PluginName} - {category}] {message}");
-        Console.ResetColor();
-    }
+    public static void LogError(string category, string message) => WriteLine(ConsoleColor.Red, category, message);
 
     public static void LogDebug(string category, string message)
     {
-        if (Config?.EnableDebug != true) return;
-        Console.ForegroundColor = ConsoleColor.Cyan;
+        if (Config?.General.EnableDebug != true) return;
+        WriteLine(ConsoleColor.Cyan, category, message);
+    }
+
+    private static void WriteLine(ConsoleColor color, string category, string message)
+    {
+        Console.ForegroundColor = color;
         Console.WriteLine($"[{PluginName} - {category}] {message}");
         Console.ResetColor();
     }
